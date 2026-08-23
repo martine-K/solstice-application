@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Solstice Events Co. &mdash; Check-In Kiosk</title>
+  <link rel="stylesheet" href="{% static 'kiosk/kiosk.css' %}" />
+</head>
+<body>
+  <main class="kiosk">
+    <h1>Solstice Events Co.</h1>
+    <p class="subtitle">Event Check-In Kiosk</p>
+
+    <form id="scan-form">
+      <label for="qr_code">Scan or enter QR code</label>
+      <input type="text" id="qr_code" name="qr_code" autofocus autocomplete="off" placeholder="e.g. QR-ADA-001" />
+      <button type="submit">Scan</button>
+    </form>
+
+    <section id="status-panel" class="status-panel status-idle">
+      <p id="status-text">Ready to scan.</p>
+    </section>
+  </main>
+
+  <script src="{% static 'kiosk/kiosk.js' %}"></script>
+</body>
+</html>
