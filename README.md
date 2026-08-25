@@ -32,9 +32,8 @@ Printer Worker (separate process) consumes the RabbitMQ message
 Simulated badge printing (time delay + configurable failure rate)
   ↓
 Worker POSTs badge.print.completed webhook to Django, signed with HMAC-SHA256
-  ↓
-Django verifies signature → looks up PrintJob by job_id → idempotency check by event_id
-  ↓
+ ↓
+Django verifies signature → looks up PrintJob by job_id → idempotency check by event_id  ↓
 PrintJob → COMPLETED/FAILED, and only on COMPLETED does Attendee → CHECKED_IN
 ```
 
@@ -211,17 +210,14 @@ cp .env.example .env
 docker compose up --build
 ```
 
-This starts PostgreSQL, RabbitMQ (with management UI on :15672), the
-Django web app (:8000, running migrations + collectstatic on boot), and the
-`printer_worker` Celery consumer.
+This starts PostgreSQL, RabbitMQ, the Django web app, and the `printer_worker` Celery consumer.
 
 Seed the 3 demo attendees:
 ```bash
 docker compose exec web python manage.py seed_attendees
 ```
 
-Open the kiosk UI at `http://localhost:8000/` and scan `QR-ADA-001`,
-`QR-GRACE-002`, or `QR-ALAN-003`.
+Open the kiosk UI at `http://localhost:8000/` 
 
 ### Without Docker (local dev / running tests)
 
@@ -231,9 +227,6 @@ pip install -r requirements.txt
 export TEST_SQLITE=1   # run against sqlite instead of Postgres
 python manage.py test checkin -v 2
 ```
-
-For a full local run without Docker you'd still need a local PostgreSQL and
-RabbitMQ instance and the matching env vars from `.env.example`.
 
 ## Tests
 
